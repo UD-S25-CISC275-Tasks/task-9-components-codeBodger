@@ -1,6 +1,6 @@
-import { idText } from "typescript";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -130,7 +130,7 @@ export function addNewQuestion(
     name: string,
     type: QuestionType,
 ): Question[] {
-    return [];
+    return [...questions, makeBlankQuestion(id, name, type)];
 }
 
 /***
@@ -143,7 +143,9 @@ export function renameQuestionById(
     targetId: number,
     newName: string,
 ): Question[] {
-    return [];
+    return questions.map((v) =>
+        v.id === targetId ? { ...v, name: newName } : v,
+    );
 }
 
 /***
@@ -158,7 +160,18 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType,
 ): Question[] {
-    return [];
+    return questions.map((v) =>
+        v.id === targetId ?
+            {
+                ...v,
+                type: newQuestionType,
+                options:
+                    newQuestionType === "multiple_choice_question" ?
+                        v.options
+                    :   [],
+            }
+        :   v,
+    );
 }
 
 /**
@@ -177,7 +190,13 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string,
 ): Question[] {
-    return [];
+    const repl = (options: string[]): string[] =>
+        targetOptionIndex === -1 ?
+            [...options, newOption]
+        :   options.map((v, i) => (i === targetOptionIndex ? newOption : v));
+    return questions.map((v) =>
+        v.id === targetId ? { ...v, options: repl(v.options) } : v,
+    );
 }
 
 /***
@@ -191,5 +210,11 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number,
 ): Question[] {
-    return [];
+    return questions.reduce(
+        (prev, curr) =>
+            targetId === curr.id ?
+                [...prev, curr, duplicateQuestion(newId, curr)]
+            :   [...prev, curr],
+        [] as Question[],
+    );
 }
