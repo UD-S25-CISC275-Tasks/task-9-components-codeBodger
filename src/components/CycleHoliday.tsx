@@ -17,7 +17,7 @@ const holidays2emoji: Record<Holiday, string> = Object.assign(
     ...holidaysByYear.map((v, i) => ({ [v]: holidayEmogis[i] }))
 );
 
-export function CycleHoliday(): /* React. */ JSX.Element {
+export function CycleHoliday(): React.JSX.Element {
     const [holiday, setHoliday] = useState<Holiday>("רֹאשׁ הַשָּׁנָה");
 
     return (

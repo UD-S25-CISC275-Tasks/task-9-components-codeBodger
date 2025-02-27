@@ -11,7 +11,7 @@ export function d6(): number {
     return 1 + Math.floor(Math.random() * 6);
 }
 
-export function TwoDice(): /* React. */ JSX.Element {
+export function TwoDice(): React.JSX.Element {
     const [lDie, setLDie] = useState<number>(2);
     const [rDie, setRDie] = useState<number>(4);
 
