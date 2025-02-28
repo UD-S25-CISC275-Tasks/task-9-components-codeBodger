@@ -9,13 +9,13 @@ export function ChangeType(): React.JSX.Element {
         <div>
             <h2>Change Type</h2>
             <Button
-                onClick={() =>
+                onClick={() => {
                     setType(
                         type === "multiple_choice_question"
                             ? "short_answer_question"
                             : "multiple_choice_question"
-                    )
-                }
+                    );
+                }}
             >
                 Change Type
             </Button>
