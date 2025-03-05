@@ -24,8 +24,14 @@ function nextByYear(current: Holiday): Holiday {
     ];
 }
 
+function toSorted<T>(arr: T[], compareFn?: (a: T, b: T) => number): T[] {
+    const arrCp = [...arr];
+    arrCp.sort(compareFn);
+    return arrCp;
+}
+
 function nextByAlph(current: Holiday): Holiday {
-    const holidaysByAlph = holidaysByYear.toSorted!() as Holiday[];
+    const holidaysByAlph = toSorted(holidaysByYear) as Holiday[];
     return holidaysByAlph[
         (holidaysByAlph.findIndex((v) => v === current) + 1) %
             holidaysByAlph.length
